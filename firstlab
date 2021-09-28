@@ -1,0 +1,249 @@
+import scala.collection.mutable.ListBuffer
+import scala.math.BigInt.probablePrime
+import scala.util.Random
+
+object tasks {
+  def main(args: Array[String]): Unit = {
+    println("task2: " + "crazy" * 3)
+    println("task3: " + (10 max 2))
+    println("task4: " + BigInt(2).pow(1024))
+    println("task5: " + probablePrime(100, Random))
+    println("task6: " + probablePrime(100, Random).toString(36))
+    var text: String = "testing"
+    var list1: List[Int] = List(1, 1)
+    var list2: List[Int] = List(5, 8)
+    var list3: List[Any] = List(list1)
+    var list4: List[Any] = List(3, list2)
+    var list5: List[Any] = List(list3, 2, list4)
+    var listx: List[Int] = List(1, 2, 3, 4, 5)
+    println("task7: " + "String: " + text + ", FirstChar: " + text(0) + ", LastChar: " + text(text.length-1))
+    println("task8: String: " + text)
+    println("    take: " + text.take(2))
+    println("    drop: " + text.drop(2))
+    println("    takeRight: " + text.takeRight(2))
+    println("    dropRight: " + text.dropRight(2))
+    println("task9: " + task9(2))
+    print("task11: ")
+    task11()
+    print("task12: ")
+    task12(5)
+    println("task13: " + "String: " + text + task13(text))
+    println("task14: " + "String: " + text + " " + product(text))
+    println("task15: " + "String: " + text + " " + task15(text))
+    println("task16: " + "String: " + text + " " + task16(text))
+    println("task18: " + task18(0, 100))
+    println("task19: " + task19(list5))
+    println("task20: " + task20(100))
+    println("task21: " + task21(2, list1))
+    println("task22: " + task22(95))
+    println("task23: " + task23(2, list1))
+    println("task24: " + task24(5, 9))
+    println("task25: " + task25(2, listx))
+    println("task26: " + task26(1, 10))
+    println("task28: " + task28(6))
+    println("task29: ")
+    task29(listx)
+    println("task30: " + task30(100))
+  }
+  def task9(int: Int): Int = {
+    var signum: Int = 0
+    if (int > 0)
+      signum = 1
+    else if (int < 0)
+      signum = -1
+    signum
+  }
+  def task11(): Unit = {
+    for (i <- 0 to 10) {
+      println("    " + (10 - i))
+    }
+  }
+  def task12(n: Int): Unit = {
+    for (i <- 0 to n) {
+      println("    " + (n - i))
+    }
+  }
+  def task13(string: String): Unit = {
+    var x: Long = 1
+    for (w <- 0 until string.length){
+      x = x * string(w)
+    }
+    println(x)
+  }
+  def product(s: String): Long = {
+    s.foldLeft(1L)((m, n) => m * n)
+  }
+  def task15(s2: String): Long = {
+    var x: Long = 1
+    for (c <- s2) x *= c.toInt
+    x
+  }
+  def task16(s: String): Long = {
+    if (s.length != 0) {
+      s(0) * product(s.drop(1))
+    } else
+      1L
+  }
+  def task18(m: Int, n: Int): Int = {
+    var a: Int = 0
+    for (w <- m to n; if (valid(w.toString))) {
+      a += w
+    }
+    a
+  }
+  def valid(toString: String): Boolean = {
+    var a = ListBuffer[Int]()
+    for (w <- 0 until toString.length) {
+      if (!a.contains(toString(w))) {
+        a += toString(w)
+      }
+      else {
+        return false
+      }
+    }
+    true
+  }
+  def task19(m: List[Any]) : List[Int]={
+    var s = 1::Nil
+    s = s.filter(_<2)
+    val s2 = m.toString();
+    for(v<-0 until s2.length){
+      if(s2(v).toInt>47&&s2(v).toInt<58){
+        s = s2(v).toString.toInt::s
+      }
+    }
+    s.reverse }
+  def task20(n: Int): Int = {
+    var a:Int = 1
+    for (i <- 2 until n) {
+      if (n % i == 0) {
+        a=i
+      }
+    }
+    var c = 0
+    for (w <- 0 until a.toString.length) {
+        c+=a.toString.charAt(w).toString.toInt
+    }
+    c
+  }
+  def task21(k:Int, m: List[Any]) : List[Any]={
+    var c = List[Any]()
+    for(i<- 0 until m.length){
+      for(j<- 0 until k){
+        c = m(i)::c
+      }
+    }
+    c
+  }
+  def task22(n: Int): Int = {
+    var a:Int = 1
+    for (i <- 2 until n) {
+      if (n % i == 0) {
+        a=i
+      }
+    }
+    var c = 0
+    for (w <- 0 until a.toString.length) {
+      c+=a.toString.charAt(w).toString.toInt
+    }
+    c
+  }
+  def task23(k:Int, m: List[Any]) : List[Any]={
+    var c = List[Any]()
+    for(i<- 0 until m.length){
+      for(j<- 0 until k){
+        c = m(i)::c
+      }
+    }
+    c
+  }
+  def gcd(a: Int, b: Int): Int ={
+    if(b == 0){
+      a
+    }
+    else {
+      gcd(b,a % b);
+    }
+  }
+  def task24(n: Int, m: Int): Int ={
+    n / gcd(n, m) * m
+  }
+  def task25(k:Int, m: List[Any]) : List[Any]={
+    var c = List[Any]()
+    for(i<- 0 until m.length){
+      if((i+1)%k != 0){
+        c = m(i)::c
+      }
+    }
+    c.reverse
+  }
+  def faktorial(n:Int):Int={
+    if(n<2){
+      1
+    } else {
+      n*faktorial(n-1)
+    }
+  }
+  def task26(n: Int, k: Int): Int ={
+    faktorial(n)/faktorial(n-k)
+  }
+  def summdel(n: Int): Int ={
+    var c = 1
+    for(v <- 2 until n){
+      if(n%v==0) c+=v
+    }
+    c
+  }
+  def task28(n: Int): Int ={
+    for(v <- 0 to n-1){
+      if(n-v==summdel(n-v))
+        return n-v
+    }
+    0
+  }
+  def task29(m: List[Any]) : Unit={
+    var c1 = List[Any]()
+    var c2 = List[Any]()
+    for(i<- 0 until m.length){
+      if(i%2 == 0){
+        c1 = m(i)::c1
+      } else {
+        c2 = m(i)::c2
+      }
+    }
+    println(c1.reverse)
+    println(c2.reverse)
+  }
+  def task30(n: Int): Int ={
+    var count = 1
+    var sum = 0
+    for(i<-n to 1 by -1){
+      var a = i
+      while (a>0){
+        sum+=a%10
+        a/=10
+      }
+      if(sum>1){
+        val b = sum
+        while (sum<i){
+          sum*= b
+          count+=1
+        }
+      }
+      if(sum == i && count !=1 )
+        return sum
+      sum=0
+    }
+    0
+  }
+  def task31(m: List[(Int, String)]) : Unit={
+    var c1 = List[Int]()
+    var c2 = List[String]()
+    for(i<- 0 until m.length){
+      c1 = m(i)._1::c1
+      c2 = m(i)._2::c2
+    }
+    println(c1.reverse)
+    println(c2.reverse)
+  }
+}
